@@ -17,16 +17,6 @@ translator = Translator()
 with open ("test.json","r",encoding='utf8') as jfile:
   jdate=json.load(jfile)
 
-@bot.command(name="ping", description="Get bot ping value.")
-async def ping(ctx):
-    bot_ping = round(bot.latency * 1000)
-    await ctx.response.send_message(f"Bot's ping is {bot_ping}ms.")
-
-@bot.message_command()
-async def say(interaction: nextcord.Interaction, message: nextcord.Message):
-    tw_to_cn=opencc.OpenCC('t2s')
-    await interaction.response.send_message(tw_to_cn.convert(message.content), ephemeral=True)
-
 @bot.command()
 @commands.is_owner()
 async def load(ctx, extension):
