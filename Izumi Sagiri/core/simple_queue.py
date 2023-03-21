@@ -18,3 +18,6 @@ class Queue:
 
     def clear(self):
         self.items = []
+        
+    def get_list(self):
+        return self.items.copy()
