@@ -2,7 +2,7 @@ import asyncio
 import os
 import spotify
 import nextcord
-import youtube_dl
+import yt_dlp as youtube_dl
 from nextcord.ext import commands
 
 from core.simple_queue import Queue
