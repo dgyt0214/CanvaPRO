@@ -90,14 +90,17 @@ class Music(commands.Cog):
         if ctx.voice_client.is_playing():
             ctx.voice_client.stop()
             await ctx.send('Skipped!')
-            self.play_songs(ctx)
-            
+            if not self.queue.isEmpty():
+                self.play_songs(ctx)
+            else:
+                self.play_songs(ctx)
+                
     @commands.command()
     async def songlist(self, ctx):
         """Displays the list of songs in the queue"""
-        if self.Music:
-            Music = '\n'.join(self.Music)
-            await ctx.send(f'Songs in the queue:\n{Music}')
+        if not self.queue.isEmpty():
+            songs = '\n'.join(self.queue.get_list())
+            await ctx.send(f'Songs in the queue:\n{songs}')
         else:
             await ctx.send('No songs in the queue.')
 
