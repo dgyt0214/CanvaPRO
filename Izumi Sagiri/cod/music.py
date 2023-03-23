@@ -4,7 +4,7 @@ import spotify
 import nextcord
 import yt_dlp as youtube_dl
 from nextcord.ext import commands
-
+from nextcord.ext.commands import BadArgument
 from core.simple_queue import Queue
 
 
@@ -92,27 +92,16 @@ class Music(commands.Cog):
             await ctx.send('Skipped!')
             if not self.queue.isEmpty():
                 self.play_songs(ctx)
-            else:
-                self.play_songs(ctx)
                 
     @commands.command()
     async def songlist(self, ctx):
         """Displays the list of songs in the queue"""
         if not self.queue.isEmpty():
             songs = '\n'.join(self.queue.get_list())
-            await ctx.send(f'Songs in the queue:\n{songs}')
+            embed = nextcord.Embed(title="Songs in the queue", description=songs, color=nextcord.Color.blue())
+            await ctx.send(embed=embed)
         else:
-            await ctx.send('No songs in the queue.')
-
-    @commands.command()
-    async def volume(self, ctx, volume: int):
-        """Changes the player's volume"""
-
-        if ctx.voice_client is None:
-            return await ctx.send("Not connected to a voice channel.")
-
-        ctx.voice_client.source.volume = volume / 100
-        await ctx.send(f"Changed volume to {volume}%")
+            await ctx.send('```\nNo songs in the queue\n```')        
 
     @commands.command()
     async def stop(self, ctx):
